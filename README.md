@@ -18,7 +18,7 @@ Abre em http://localhost:3002. Variáveis de ambiente opcionais: `PORT`, `ADMIN_
 
 ## WhatsApp
 
-O perfil da empresa no Google só informa telefone fixo, então os botões ligam para (15) 3223-2626 e o formulário depende do servidor. Para trocar tudo por WhatsApp, preencha `WA` em `public/js/main.js` com DDI + DDD + número.
+O número (15) 3223-2626 está em `WA` (`public/js/main.js`), nos links de `public/index.html` e no padrão de `WHATSAPP` em `server.js`.
 
 ## Antes de publicar
 

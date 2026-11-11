@@ -12,7 +12,7 @@ const ADMIN_TOKEN = process.env.ADMIN_TOKEN || '';
 const PUBLIC = path.join(__dirname, 'public');
 const DATA = path.join(__dirname, 'data');
 const LEADS = path.join(DATA, 'leads.jsonl');
-const WHATSAPP = process.env.WHATSAPP || ''; // DDI + DDD + número; vazio = sem WhatsApp
+const WHATSAPP = process.env.WHATSAPP || '551532232626';
 
 const MIME = {
   '.html': 'text/html; charset=utf-8', '.css': 'text/css; charset=utf-8', '.js': 'text/javascript; charset=utf-8',

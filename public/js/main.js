@@ -225,9 +225,8 @@
   });
 
   /* ---------- Formulário ---------- */
-  // O perfil da empresa só informa telefone fixo. Para ligar o WhatsApp no site todo,
-  // preencha WA com DDI + DDD + número (ex.: '5515999999999').
-  const WA = '';
+  // WhatsApp da empresa: DDI + DDD + número.
+  const WA = '551532232626';
   const FONE = '(15) 3223-2626';
   const form = $('#form');
   const msg = $('.form__msg', form);
@@ -255,7 +254,7 @@
     if (bad.length) {
       bad.forEach(n => form.elements[n].setAttribute('aria-invalid', 'true'));
       msg.className = 'form__msg is-err';
-      msg.textContent = bad.includes('telefone') ? 'Informe o telefone com DDD, por exemplo (15) 99999-9999.' : 'Preencha nome, telefone e ambiente.';
+      msg.textContent = bad.includes('telefone') ? 'Informe o WhatsApp com DDD, por exemplo (15) 99999-9999.' : 'Preencha nome, WhatsApp e ambiente.';
       form.elements[bad[0]].focus();
       return;
     }
