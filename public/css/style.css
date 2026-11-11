@@ -126,16 +126,20 @@ section[id] { scroll-margin-top: 72px; }
 @media (max-width: 400px) { .nav__cta { display: none; } }
 
 /* Hero */
+/* Três blocos: título, foto, texto com botões.
+   Desktop: título e texto empilhados à esquerda, foto à direita.
+   Celular: título, foto logo em seguida, depois texto e botões. */
 .hero {
+  --hero-l: max(var(--gutter), calc((100vw - 1440px) / 2 + var(--gutter)));
+  --hero-r: clamp(24px, 5vw, 80px);
   display: grid; grid-template-columns: minmax(0, 48fr) minmax(0, 52fr);
+  grid-template-rows: 1fr auto auto 1fr;
   min-height: min(100svh, 900px);
   background: var(--bg);
 }
-.hero__text {
-  align-self: center;
-  padding: 120px clamp(24px, 5vw, 80px) 56px max(var(--gutter), calc((100vw - 1440px) / 2 + var(--gutter)));
-  max-width: 680px;
-}
+.hero__head { grid-column: 1; grid-row: 2; max-width: 680px; padding: 120px var(--hero-r) 0 var(--hero-l); }
+.hero__below { grid-column: 1; grid-row: 3; max-width: 680px; padding: 0 var(--hero-r) 56px var(--hero-l); }
+.hero__media { grid-column: 2; grid-row: 1 / -1; }
 .hero__title {
   margin-top: 20px;
   font: 400 clamp(40px, 5vw, 68px)/1.04 var(--serif);
@@ -153,10 +157,13 @@ section[id] { scroll-margin-top: 72px; }
 .hero__img img { width: 100%; height: 100%; object-fit: cover; }
 
 @media (max-width: 899px) {
-  .hero { grid-template-columns: 1fr; min-height: 0; }
-  .hero__text { padding: 104px var(--gutter) 40px; max-width: none; }
-  .hero__media { height: 72svh; min-height: 420px; margin: 0 12px; border-radius: var(--r-md); }
-  .perks { gap: 18px 24px; }
+  .hero { grid-template-columns: 1fr; grid-template-rows: none; min-height: 0; }
+  .hero__head, .hero__below, .hero__media { grid-column: 1; grid-row: auto; max-width: none; }
+  .hero__head { padding: 84px var(--gutter) 20px; }
+  .hero__title { margin-top: 12px; font-size: clamp(30px, 8.6vw, 44px); }
+  .hero__media { height: 56svh; min-height: 320px; margin: 0 12px; border-radius: var(--r-md); }
+  .hero__below { padding: 24px var(--gutter) 48px; }
+  .perks { margin-top: 32px; gap: 18px 24px; }
 }
 
 /* Entrada da hero — o único momento orquestrado */
@@ -173,6 +180,21 @@ section[id] { scroll-margin-top: 72px; }
 .js-motion .is-in .hero__media { clip-path: inset(0 0 0 0); transition: clip-path 1200ms var(--ease-io) 100ms; }
 .js-motion .hero__img img { transform: scale(1.08); }
 .js-motion .is-in .hero__img img { transform: scale(1); transition: transform 1800ms var(--ease-out) 100ms; }
+
+/* Sublinhado em onda que se desenha (adaptado do componente animated-underline-text) */
+.uline { position: relative; display: inline-block; white-space: nowrap; }
+.uline svg { position: absolute; left: 0; bottom: -.16em; width: 100%; height: .28em; overflow: visible; color: var(--gold); pointer-events: none; }
+.uline path {
+  fill: none; stroke: currentColor; stroke-width: 2.5; stroke-linecap: round;
+  stroke-dasharray: 1; stroke-dashoffset: 0;
+  d: path("M 0,10 Q 75,0 150,10 Q 225,20 300,10");
+  transition: d 800ms var(--ease-io);
+}
+.js-motion .uline path { stroke-dashoffset: 1; }
+.js-motion .is-in .uline path { stroke-dashoffset: 0; transition: stroke-dashoffset 1500ms ease-in-out 500ms, d 800ms var(--ease-io); }
+@media (hover: hover) and (pointer: fine) {
+  .hero__title:hover .uline path { d: path("M 0,10 Q 75,20 150,10 Q 225,0 300,10"); }
+}
 
 /* Seções escuras */
 .dark { background: var(--dark); color: var(--on-dark); padding: clamp(72px, 9vw, 120px) 0; }
