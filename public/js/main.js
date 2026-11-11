@@ -35,6 +35,27 @@
     addEventListener('scroll', () => { if (!ticking) { ticking = true; requestAnimationFrame(par); } }, { passive: true });
   }
 
+  /* Vídeo em loop na hero, só no celular.
+     A foto carrega primeiro; o vídeo entra depois do load, com esmaecimento, e pausa fora da tela.
+     Não roda com movimento reduzido nem com economia de dados. */
+  const mobile = matchMedia('(max-width: 899px)');
+  const saveData = navigator.connection && navigator.connection.saveData;
+  let heroVideo = null;
+  const mountVideo = () => {
+    if (heroVideo || reduce || saveData || !mobile.matches || !heroImg) return;
+    const v = heroVideo = document.createElement('video');
+    v.className = 'hero__video';
+    v.muted = true; v.loop = true; v.playsInline = true; v.autoplay = true;
+    v.setAttribute('muted', ''); v.setAttribute('playsinline', ''); v.setAttribute('aria-hidden', 'true');
+    v.preload = 'auto';
+    v.src = '/video/area-gourmet-loop-9x16.mp4';
+    v.addEventListener('playing', () => v.classList.add('is-on'), { once: true });
+    heroImg.appendChild(v);
+    new IntersectionObserver(([e]) => { e.isIntersecting ? v.play().catch(() => {}) : v.pause(); }, { threshold: 0.1 }).observe(v);
+  };
+  if (document.readyState === 'complete') mountVideo(); else addEventListener('load', mountVideo);
+  mobile.addEventListener('change', mountVideo);
+
   /* Cartões de ambiente pré-selecionam o formulário */
   const select = $('#form select[name="ambiente"]');
   $$('[data-ambiente]').forEach(a => a.addEventListener('click', () => { select.value = a.dataset.ambiente; }));

@@ -155,6 +155,12 @@ section[id] { scroll-margin-top: 72px; }
 .hero__media { position: relative; overflow: hidden; background: var(--band); }
 .hero__img { position: absolute; inset: -6% 0; will-change: transform; }
 .hero__img img { width: 100%; height: 100%; object-fit: cover; }
+.hero__video {
+  position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover;
+  opacity: 0; transition: opacity 900ms ease; pointer-events: none;
+}
+.hero__video.is-on { opacity: 1; }
+@media (min-width: 900px) { .hero__video { display: none; } }
 
 @media (max-width: 899px) {
   .hero { grid-template-columns: 1fr; grid-template-rows: none; min-height: 0; }
